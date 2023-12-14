@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Workout Stopwatch</title>
+  <style>
+    #root {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      min-height: 100vh;
+      flex-flow: column nowrap;
+    }
+
+    #clock {
+      font-size: xxx-large;
+    }
+
+    table td {
+      border: 1px solid;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    .timelist-time-text {
+      width: 100%;
+    }
+
+    .timelist-time-text::after {
+      content: 's';
+    }
+  </style>
+</head>
+
+<body>
+  <div id="root">
+    <div id="clock">
+      <span id="hours">{{ getSecondsInHours }}</span>:<span id="minutes">{{ getSecondsInMinutes }}</span>:<span
+        id="seconds">{{ getSeconds }}</span>
+    </div>
+    <div id="time-list">
+      <table>
+        <tr v-for="(time, index) in times" ref="timelist">
+          <td>{{index}}</td>
+          <td class="timelist-time-text" contenteditable="true" @focusin="timelist_select_row"
+            @focusout="timelist_save_value">
+            {{time}}</td>
+        </tr>
+      </table>
+      <button v-on:click="timelist_add">Add time</button>
+      <button v-on:click="timelist_remove">Remove time</button>
+    </div>
+    <div id=auto-restart>
+      <input type="checkbox" id="auto-restart-cb" name="auto-restart" v-model="auto_restart" />
+      <label for="auto-restart">Auto restart time list</label>
+    </div>
+    <div id=clock-buttons>
+      <button v-on:click="clock_start">Start</button>
+      <button v-on:click="clock_stop">Stop</button>
+    </div>
+    <script type=module>
+    import { createApp } from 'https://unpkg.com/vue@3/dist/vue.esm-browser.js'
+    import root from './root.js'
+
+    createApp(root).mount("#root");
+  </script>
+</body>
+
+</html>
